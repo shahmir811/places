@@ -1,0 +1,32 @@
+{
+	"name": "places",
+	"version": "1.0.0",
+	"description": "Adding places on site",
+	"main": "server.js",
+	"scripts": {
+		"start": "node server.js",
+		"server": "nodemon server.js",
+		"client": "npm start --prefix client",
+		"clientinstall": "npm install --prefix client",
+		"dev": "concurrently \"npm run server\" \"npm run client\""
+	},
+	"author": "Shahmir Khan Jadoon",
+	"license": "MIT",
+	"dependencies": {
+		"bcryptjs": "^2.4.3",
+		"dotenv": "^8.2.0",
+		"express": "^4.17.1",
+		"express-validator": "^6.4.0",
+		"jsonwebtoken": "^8.5.1",
+		"moment": "^2.24.0",
+		"multer": "^1.4.2",
+		"pg": "^7.18.1",
+		"pg-hstore": "^2.3.3",
+		"sequelize": "^5.21.4"
+	},
+	"devDependencies": {
+		"concurrently": "^5.1.0",
+		"morgan": "^1.9.1",
+		"nodemon": "^2.0.2"
+	}
+}
