@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 
 const AuthRoutes = require('./routes/auth.routes');
+const UserRoutes = require('./routes/user.routes');
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(morgan('dev'));
 app.use(express.json({ extended: false })); // body-Parser. By default included in express.js
 
 app.use('/api/auth', AuthRoutes);
+app.use('/api/users', UserRoutes);
 
 const PORT = process.env.PORT || 5000;
 

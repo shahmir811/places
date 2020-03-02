@@ -7,7 +7,6 @@ import './CardItem.styles.scss';
 const CardItem = ({ id, name, image }) => {
 	return (
 		<Card>
-			<Card.Img variant='top' src={image} className='make-small-round-img' />
 			<Card.Body>
 				<Card.Title>{name}</Card.Title>
 				<Card.Text>

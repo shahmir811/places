@@ -1,5 +1,5 @@
 import React, { useContext, Fragment, useEffect } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Spinner } from 'react-bootstrap';
 
 import CardList from '../../components/CardList/CardList.component';
 import PlaceContext from '../../context/place/placeContext';
@@ -10,7 +10,7 @@ const HomePage = () => {
 	const placeContext = useContext(PlaceContext);
 	const authContext = useContext(AuthContext);
 
-	const { getUsersList, users } = placeContext;
+	const { getUsersList, users, loading } = placeContext;
 	const { loadUser } = authContext;
 
 	useEffect(() => {
@@ -19,15 +19,19 @@ const HomePage = () => {
 		// eslint-disable-next-line
 	}, []);
 
-	return (
-		<Fragment>
-			<Row>
-				<Col>
-					<CardList users={users} />
-				</Col>
-			</Row>
-		</Fragment>
-	);
+	if (loading) {
+		return <Spinner animation='border' variant='primary' />;
+	} else {
+		return (
+			<Fragment>
+				<Row>
+					<Col>
+						<CardList users={users} />
+					</Col>
+				</Row>
+			</Fragment>
+		);
+	}
 };
 
 export default HomePage;

@@ -1,14 +1,23 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Button, Row, Col, Spinner } from 'react-bootstrap';
+import _ from 'lodash';
 
-import AlertContext from '../../context/alert/alertContext';
+// import AlertContext from '../../context/alert/alertContext';
 import AuthContext from '../../context/auth/authContext';
 
 const Login = props => {
 	const authContext = useContext(AuthContext);
 
-	const { login, errors, loading, clearErrors } = authContext;
+	const {
+		login,
+		errors,
+		loading,
+		clearErrors,
+		token,
+		loadUser,
+		isAuthenticated
+	} = authContext;
 
 	const [user, setUser] = useState({
 		email: '',
@@ -17,8 +26,18 @@ const Login = props => {
 
 	useEffect(() => {
 		clearErrors();
+		if (token) {
+			loadUser();
+		}
 		// eslint-disable-next-line
 	}, []);
+
+	useEffect(() => {
+		if (isAuthenticated) {
+			props.history.goBack();
+		}
+		// eslint-disable-next-line
+	}, [isAuthenticated]);
 
 	const { email, password } = user;
 
@@ -52,9 +71,9 @@ const Login = props => {
 								name='email'
 								value={email}
 								onChange={onChangeHandler}
-								className={errors.email && 'invalid'}
+								className={_.has(errors, 'email') && 'invalid'}
 							/>
-							{errors.email && (
+							{_.has(errors, 'email') && (
 								<Form.Text className='text-muted show-error'>
 									{errors.email.msg}
 								</Form.Text>
@@ -69,9 +88,9 @@ const Login = props => {
 								name='password'
 								value={password}
 								onChange={onChangeHandler}
-								className={errors.password && 'invalid'}
+								className={_.has(errors, 'password') && 'invalid'}
 							/>
-							{errors.password && (
+							{_.has(errors, 'password') && (
 								<Form.Text className='text-muted show-error'>
 									{errors.password.msg}
 								</Form.Text>

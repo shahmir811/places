@@ -11,11 +11,18 @@ import AlertMessages from './components/AlertMessages/AlertMessages.component';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 
+import PrivateRoute from './components/routing/PrivateRoute';
 import AuthState from './context/auth/AuthState';
 import PlaceState from './context/place/PlaceState';
 import AlertState from './context/alert/AlertState';
+import SetAuthToken from './utils/SetAuthToken';
 
 import './App.css';
+
+const token = localStorage.getItem('token');
+if (token) {
+	SetAuthToken(token);
+}
 
 const App = () => {
 	return (
@@ -30,7 +37,11 @@ const App = () => {
 								<Switch>
 									<Route path='/' component={HomePage} exact />
 									<Route path='/:id/places' component={MyPlaces} exact />
-									<Route path='/add-new-place' component={AddNewPlace} exact />
+									<PrivateRoute
+										path='/add-new-place'
+										component={AddNewPlace}
+										exact
+									/>
 									<Route path='/login' component={Login} />
 									<Route path='/register' component={Register} />
 									<Route component={NotFoundPage} />
