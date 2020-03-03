@@ -60,9 +60,11 @@ const NavigationBar = props => {
 					<NavLink to='/' className='nav-link white-text'>
 						Home
 					</NavLink>
-					<NavLink to='/my-places' className='nav-link white-text'>
-						Places
-					</NavLink>
+					{user && (
+						<NavLink to={`/${user.id}/places`} className='nav-link white-text'>
+							My Places
+						</NavLink>
+					)}
 					{RenderLinks()}
 				</Nav>
 			</Navbar.Collapse>

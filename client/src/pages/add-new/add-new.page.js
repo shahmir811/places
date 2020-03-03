@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import React, { useState, useContext } from 'react';
+import { Form, Button, Row, Col, Spinner, Alert } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-// import renderHTML from 'react-render-html';
+
+import PlaceContext from '../../context/place/placeContext';
+import AuthContext from '../../context/auth/authContext';
 
 const AddNewPage = () => {
+	const placeContext = useContext(PlaceContext);
+	const authContext = useContext(AuthContext);
+
+	const { addNewPlace, loading, uploadPercent } = placeContext;
+	const { user } = authContext;
+
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
 
@@ -30,8 +38,12 @@ const AddNewPage = () => {
 	const onSubmitHandler = e => {
 		e.preventDefault();
 
-		console.log('Name: ', name);
-		console.log('description: ', description);
+		const data = new FormData();
+		data.append('name', name);
+		data.append('description', description);
+		data.append('image', placeImage);
+
+		addNewPlace(data, user.id);
 	};
 
 	return (
@@ -87,8 +99,12 @@ const AddNewPage = () => {
 								</div>
 							</div>
 						</div>
-						<Button variant='primary' type='submit'>
-							Save
+						<Button variant='primary' type='submit' disabled={loading}>
+							{loading ? (
+								<Spinner animation='border' variant='light' />
+							) : (
+								<span>Save</span>
+							)}
 						</Button>
 					</Form>
 				</Col>
@@ -100,6 +116,10 @@ const AddNewPage = () => {
 							alt='Preview'
 							style={{ width: '75%', margin: '0 12%' }}
 						/>
+					)}
+					<br />
+					{uploadPercent > 0 && (
+						<Alert variant='success'>Uploaded {uploadPercent}%</Alert>
 					)}
 				</Col>
 			</Row>
