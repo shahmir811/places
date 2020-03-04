@@ -42,7 +42,8 @@ export default (state, action) => {
 				errors: payload,
 				loading: false,
 				token: null,
-				isAuthenticated: false
+				isAuthenticated: false,
+				user: null
 			};
 
 		case REMOVE_ERRORS:

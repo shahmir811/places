@@ -132,6 +132,7 @@ const AuthState = props => {
 	const logout = () => {
 		setAlert('success', 'Logout successfully');
 		dispatch({ type: LOGOUT });
+		SetAuthToken(null);
 	};
 
 	///////////////////////// Clear Errors /////////////////////////

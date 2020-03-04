@@ -6,7 +6,8 @@ import {
 	ADD_NEW_PLACE_START,
 	ADD_NEW_PLACE_SUCCESS,
 	ADD_NEW_PLACE_FAIL,
-	UPLOAD_PLACE_PROGRESS
+	UPLOAD_PLACE_PROGRESS,
+	REMOVE_PLACE
 } from '../types';
 
 export default (state, action) => {
@@ -38,6 +39,13 @@ export default (state, action) => {
 				...state,
 				places: payload,
 				loading: false
+			};
+
+		case REMOVE_PLACE:
+			return {
+				...state,
+				loading: false,
+				places: state.places.filter(place => place.id !== payload)
 			};
 
 		default:

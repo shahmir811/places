@@ -45,4 +45,7 @@ const upload = multer({
 
 router.post('/:id', [isAuth, upload.single('image')], PlaceController.addPlace);
 
+/////////////////////////// Delete place ///////////////////////////
+router.delete('/:id', [isAuth], PlaceController.removePlace);
+
 module.exports = router;

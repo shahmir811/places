@@ -1,5 +1,8 @@
-const { User, Places } = require('../models');
+const path = require('path');
+const fs = require('fs');
+const { User, Place } = require('../models');
 
+/////////////////////////// Add new place ///////////////////////////
 exports.addPlace = async (req, res, next) => {
 	const { id } = req.params;
 
@@ -19,6 +22,34 @@ exports.addPlace = async (req, res, next) => {
 	} catch (error) {
 		errorFunction(error, res);
 	}
+};
+
+/////////////////////////// Remove place ///////////////////////////
+exports.removePlace = async (req, res, next) => {
+	const { id } = req.params;
+
+	try {
+		// get place to be deleted
+		const place = await Place.findByPk(id);
+
+		// remove image from drive
+		clearImage(place.image_path);
+
+		// remove record from database
+		await place.destroy();
+
+		// success message
+		res.status(200).json('File deleted successfully');
+	} catch (error) {
+		errorFunction(error, res);
+	}
+};
+
+/////////////////////////// Remove image from drive ///////////////////////////
+
+const clearImage = filePath => {
+	filePath = path.join(__dirname, '..', filePath);
+	fs.unlink(filePath, err => console.log(err));
 };
 
 /////////////////////////// Error Function ///////////////////////////

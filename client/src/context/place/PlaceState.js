@@ -15,7 +15,8 @@ import {
 	ADD_NEW_PLACE_START,
 	ADD_NEW_PLACE_SUCCESS,
 	ADD_NEW_PLACE_FAIL,
-	UPLOAD_PLACE_PROGRESS
+	UPLOAD_PLACE_PROGRESS,
+	REMOVE_PLACE
 } from '../types';
 
 const PlaceState = props => {
@@ -102,6 +103,20 @@ const PlaceState = props => {
 		}
 	};
 
+	const removePlace = async id => {
+		try {
+			await axios.delete(`/api/places/${id}`);
+			dispatch({
+				type: REMOVE_PLACE,
+				payload: id
+			});
+			setAlert('success', 'Place deleted successfully');
+		} catch (error) {
+			setAlert('danger', 'OOPS! Something went wrong, try again');
+			console.log(error);
+		}
+	};
+
 	return (
 		<PlaceContext.Provider
 			value={{
@@ -111,7 +126,8 @@ const PlaceState = props => {
 				uploadPercent: state.uploadPercent,
 				getUsersList,
 				getUserPlaces,
-				addNewPlace
+				addNewPlace,
+				removePlace
 			}}
 		>
 			{props.children}
