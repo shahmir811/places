@@ -1,4 +1,5 @@
 import React, { useContext, Fragment, useState } from 'react';
+import { Link } from 'react-router-dom';
 import renderHTML from 'react-render-html';
 import { Media, Button } from 'react-bootstrap';
 import SweetAlert from 'react-bootstrap-sweetalert';
@@ -37,7 +38,9 @@ const PlaceItem = props => {
 			</Media.Body>
 			{user && user.id === UserId && (
 				<Fragment>
-					<Button className='btn btn-sm btn-primary'>Edit</Button>
+					<Link className='btn btn-sm btn-primary' to={`/edit-place/${id}`}>
+						<i className='fa fa-pencil' aria-hidden='true'></i> Edit
+					</Link>
 					<Button
 						className='btn btn-sm btn-danger'
 						style={{ marginLeft: '5px' }}

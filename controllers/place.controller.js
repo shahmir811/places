@@ -24,6 +24,33 @@ exports.addPlace = async (req, res, next) => {
 	}
 };
 
+/////////////////////////// Update place ///////////////////////////
+exports.updatePlace = async (req, res, next) => {
+	const { id } = req.params;
+
+	const { name, description } = req.body;
+
+	try {
+		const place = await Place.findByPk(id);
+
+		place.name = name;
+		place.description = description;
+
+		// if there is new image. Then delete old first
+		if (req.file.path) {
+			clearImage(place.image_path);
+			place.image_path = req.file.path.replace('\\', '/');
+			place.image_name = req.file.originalname;
+		}
+
+		place.save();
+
+		res.status(200).json('Records updated successfully');
+	} catch (error) {
+		errorFunction(error, res);
+	}
+};
+
 /////////////////////////// Remove place ///////////////////////////
 exports.removePlace = async (req, res, next) => {
 	const { id } = req.params;

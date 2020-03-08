@@ -7,7 +7,10 @@ import {
 	ADD_NEW_PLACE_SUCCESS,
 	ADD_NEW_PLACE_FAIL,
 	UPLOAD_PLACE_PROGRESS,
-	REMOVE_PLACE
+	REMOVE_PLACE,
+	UPDATE_IMAGE_START,
+	UPDATE_IMAGE_SUCCESS,
+	UPDATE_IMAGE_FAIL
 } from '../types';
 
 export default (state, action) => {
@@ -19,7 +22,12 @@ export default (state, action) => {
 		case ADD_NEW_PLACE_START:
 		case ADD_NEW_PLACE_SUCCESS:
 		case ADD_NEW_PLACE_FAIL:
+		case UPDATE_IMAGE_START:
 			return { ...state, loading: true, uploadPercent: 0 };
+
+		case UPDATE_IMAGE_SUCCESS:
+		case UPDATE_IMAGE_FAIL:
+			return { ...state, loading: false, uploadPercent: 0 };
 
 		case GET_USERS_SUCCESS:
 			return {
